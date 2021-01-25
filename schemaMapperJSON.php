@@ -53,7 +53,7 @@ session_start();
 
                 }
 
-                //maps JSON object property name to MySQL table attribute
+                //maps JSON object property name to MySQL table attribute names
                 function attributeNames($nK, $index, $sA)
                 {
                     global $schema;
