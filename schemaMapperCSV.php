@@ -11,13 +11,11 @@ foreach($schemaFilenames as $schemaFilename)
     $schemaName = substr($schemaFilename, 0, strpos($schemaFilename, "."));
 }
 
+//creates object of CSV schema 
 $file = fopen("sourceSchemas/Placement_Data_Full_Class.csv", "r");
-//$fileContent = fgetcsv($file);
 $fileContent = file_get_contents("sourceSchemas/Placement_Data_Full_Class.csv");
 
-
-//print_r ($fileContent);
-
+//CREATE DATBASE statement
 echo "<br><br>";
 echo "CREATE DATABASE IF NOT EXISTS " . $schemaName . ";<br>";
 
