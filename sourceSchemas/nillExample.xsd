@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="nillableMiddleName" type="ex:NillableMiddleName">
+<xs:complexType name="NillableMiddleName">
+<xs:sequence>
+<xs:element name="firstName" type="xs:string"/>
+<xs:element name="middleName" type="xs:string" nillable="true"/>
+<xs:element name="lastName" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="echoNillableElement">
+<xs:complexType>
+<xs:sequence>
+<xs:element ref="ex:nillableMiddleName"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:schema>

@@ -1,0 +1,35 @@
+.embedCode {
+    /*background-color: lightgrey;*/
+    background-color: #f5f5f0;
+    width: 900px;
+    border: 2px solid #e1e1d0;
+    padding: 50px;
+    /*margin: 20px;*/
+    margin: auto;
+}
+
+#keyword {
+    color: #586cd2;
+}
+
+.attrName {
+    color: #586cd2;
+}
+
+.dtype {
+    color: #834689;
+    /*color: #990055;*/
+}
+
+.size {
+    color: #990055;
+}
+
+code {
+    color: #000;
+}
+
+.btnSchema {
+    margin-left: 40%;
+    margin-right: 40%;
+}

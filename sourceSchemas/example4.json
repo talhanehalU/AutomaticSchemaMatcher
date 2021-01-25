@@ -1,0 +1,22 @@
+{
+    "$id": "https://example.com/person.schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "IntegerExample",
+    "type": "object",
+    "properties": {
+        "shoeSizeEU": {
+            "type": "integer",
+            "minimum": 36,
+            "maximum": 42
+        },
+        "shirtSize": {
+            "type": "integer",
+            "exclusiveMinimum": 19,
+            "exclusiveMaximum": 31
+        },
+        "eyePower" : {
+            "type" : "integer",
+            "multipleOf": 5
+        }
+    }
+}

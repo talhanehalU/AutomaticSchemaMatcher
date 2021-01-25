@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="Customer">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="CustomerID" type="xs:integer" />
+            <xs:element name="Dob" type="xs:date" />
+            <xs:attribute name="Address" type="xs:string"  use="required" />
+            <xs:element name="CNIC" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+<xs:unique name="oneCNICforEachCustomer">
+  <xs:selector xpath="mstns:CNIC"/>
+  <xs:field xpath="@CustomerID"/>
+ </xs:unique>
+</xs:element>
+
+<xs:element name="Supplier">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="Phone" type="xs:integer" />
+            <xs:element name="Address" type="xs:string" />
+            <xs:attribute name="Location" type="xs:string" default="KHI" />
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<xs:element name="Product">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="Name" type="xs:string" />
+      <xs:element name="Price" type="xs:decimal" />
+      <xs:attribute name = "Quantity" type="xs:integer" use="required" /> 
+      <xs:element name="car">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Audi"/>
+          <xs:enumeration value="Golf"/>
+          <xs:enumeration value="BMW"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
+    </xs:sequence>  
+  </xs:complexType>
+</xs:element>
+</xs:schema>

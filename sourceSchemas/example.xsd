@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="World">
+        <xs:key name="PKPerson">
+            <xs:selector xpath="Person/personID"/>
+            <xs:field xpath="."/>
+        </xs:key>
+        <xs:key name="PKHouse">
+            <xs:selector xpath="House/houseID"/>
+            <xs:field xpath="."/>
+        </xs:key>
+        <xs:keyref name="FKPersonToHouse" refer="PKHouse">
+            <xs:selector xpath="Person/houseID"/>
+            <xs:field xpath="."/>
+        </xs:keyref>
+        <xs:unique name="onehouseoneaddress">
+            <xs:selector xpath="House/address" />
+            <xs:field xpath="." />
+        </xs:unique>
+    </xs:element>
+    <xs:element name="Person">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="personID" type="xs:int" />
+                <xs:element name="houseID" type="xs:string" />
+                <xs:element name="bankBalance" type="xs:decimal" nillable="true" />
+                <xs:element name="age" type="xs:int" nillable="false" />
+                <xs:element name="awesome" type="xs:gender" />
+                <xs:element name="jobDesignation" type="xs:job" />
+                <xs:element name="officeLocation" type="xs:residenceCity" />
+                <xs:element name="lastDegree" type="xs:education" />
+                <xs:element name="post" type="xs:zipcode" />
+                <xs:element name="nativeCountry" type="xs:permanentCountry" />
+                <xs:complexType name="someComplexType">
+                    <xs:attribute ref="code"/>
+                </xs:complexType>
+                <xs:simpleType name='productCode'><xs:restriction base='xs:string'><xs:length value='8' fixed='true'/></xs:restriction></xs:simpleType>
+                <xs:simpleType name='gender'><xs:restriction base='xs:string'><xs:length value='1' /></xs:restriction></xs:simpleType>
+                <xs:simpleType name="job"><xs:restriction base="xs:string"><xs:minLength value="5"/></xs:restriction></xs:simpleType>
+                <xs:simpleType name="education"><xs:restriction base="xs:string"><xs:minLength value="3" /><xs:maxLength value="6" /></xs:restriction></xs:simpleType>
+                <xs:simpleType name="residenceCity"><xs:restriction base="xs:string"><xs:maxLength value="9" /></xs:restriction></xs:simpleType>
+                <xs:simpleType name='zipcode'><xs:restriction base="xs:string"><xs:pattern value='[0-9]{5}(-[0-9]{4})?'/></xs:restriction></xs:simpleType>
+                <xs:simpleType name="permanentCountry"><xs:restriction base="xs:string"><xs:enumeration value="PAK" /><xs:enumeration value="ENG" /><xs:enumeration value="SL" /></xs:restriction></xs:simpleType>
+                <xs:simpleType name="hobbies">
+                    <xs:restriction base="xs:string">
+                        <xs:whiteSpace value="preserve" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="criminalRecord">
+                    <xs:restriction base="xs:string">
+                        <xs:whiteSpace value="replace" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="visa">
+                    <xs:restriction base="xs:string">
+                        <xs:whiteSpace value="collapse" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="true-or-false">
+                    <xs:restriction base="xs:boolean">
+                        <xs:pattern value="true" />
+                        <xs:pattern value="false" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="yes-or-no">
+                    <xs:restriction base="xs:boolean">
+                        <xs:whiteSpace value="replace" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="eyeVision">
+                    <xs:restriction base="xs:float">
+                        <xs:enumeration value="2.25" />
+                        <xs:enumeration value="2.50" />
+                        <xs:enumeration value="2.75" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="weight">
+                    <xs:restriction base="xs:float">
+                        <xs:whiteSpace value="preserve" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="height">
+                    <xs:restriction base="xs:float">
+                        <xs:whiteSpace value="collapse" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="shoeSize">
+                    <xs:restriction base="xs:float">
+                        <xs:whiteSpace value="replace" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="dailyEarning">
+                    <xs:restriction base="xs:float">
+                        <xs:maxExclusive value="32.76" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="dailyExpense">
+                    <xs:restriction base="xs:float">
+                        <xs:minExclusive value="32.76" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="monthlyExpense">
+                    <xs:restriction base="xs:float">
+                        <xs:minExclusive value="3002.28" />
+                        <xs:maxExclusive value="8005.33" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="yearlyExpense">
+                    <xs:restriction base="xs:float">
+                        <xs:minInclusive value="300002.88" />
+                        <xs:maxInclusive value="800015.56" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="dailyBudget">
+                    <xs:restriction base="xs:float">
+                        <xs:minExclusive value="32.76" />
+                        <xs:maxInclusive value="88.12" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="weeklyBudget">
+                    <xs:restriction base="xs:decimal">
+                        <xs:totalDigits value="5" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="yearlyBudget">
+                    <xs:restriction base="xs:decimal">
+                        <xs:fractionDigits value="1" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="calorieIntake">
+                    <xs:restriction base="xs:decimal">
+                        <xs:whiteSpace value="preserve" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="GPA">
+                    <xs:restriction base="xs:decimal">
+                        <xs:enumeration value="2.00" />
+                        <xs:enumeration value="2.33" />
+                        <xs:enumeration value="2.67" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="rewardPoints">
+                    <xs:restriction base="xs:decimal">
+                        <xs:maxExclusive value="45.45" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="electricityBillNo">
+                    <xs:restriction base="xs:decimal">
+                        <xs:minExclusive value="646.85" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="waterBillNo">
+                    <xs:restriction base="xs:decimal">
+                        <xs:minExclusive value="4521.28" />
+                        <xs:maxExclusive value="7787.25" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="gasBillNo">
+                    <xs:restriction base="xs:decimal">
+                        <xs:minInclusive value="12154.54" />
+                        <xs:maxInclusive value="45687.44" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="phoneBillNo">
+                    <xs:restriction base="xs:decimal">
+                        <xs:minExclusive value="45.88" />
+                        <xs:maxInclusive value="45.51" />
+                    </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType name="">
+                    <xs:restriction base="xs:decimal"></xs:restriction>
+                </xs:simpleType>
+            </xs:sequence>
+            <xs:attribute name="car" type="xs:string" default="NONE" />
+            <xs:attribute name="food" type="xs:boolean" fixed="true" />
+            <xs:attribute name="email" type="xs:string" use="optional" />
+            <xs:attribute name="mobileNum" type="xs:string" use="required" />
+            <xs:attribute name="ssn">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="[A-Z][A-Z]"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="code">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="[A-Z][A-Z]"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="House">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="houseID" type="xs:string" />
+                <xs:element name="address" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
