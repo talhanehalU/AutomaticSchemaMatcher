@@ -1,7 +1,5 @@
 <?php
 session_start();
-
-/// edit to store in DB
 ?>
 
 <?php include 'topbar.php' ?>
@@ -13,8 +11,6 @@ session_start();
                 <h4 class="contact-title">View MySQL Mapped Sources Schemas</h4>
                 <br><br>
                 <?php
-
-              //  include 'db.php';
 
                 echo "<div class='embedCode'>";
 
@@ -50,9 +46,9 @@ session_start();
                     global $schema;
 
                     $schemaName = substr($sF, 0, strpos($sF, "."));
-                   // echo "<span id='keyword'>CREATE DATABASE IF NOT EXISTS </span>" . $schemaName . ";<br>";
-                   $createDatabase =  "CREATE DATABASE IF NOT EXISTS " . $schemaName . ";";
-                   $schema[$index] = $createDatabase;
+                   
+                    $createDatabase =  "CREATE DATABASE IF NOT EXISTS " . $schemaName . ";";
+                    $schema[$index] = $createDatabase;
 
 
                 }
@@ -62,19 +58,12 @@ session_start();
                 {
                     global $schema;
 
-                    //echo $nK ." ";
                     if($nK != "dependencies")
                     {
                     $schema[$index] .= "$nK ";
  
                     }  
                     
-                    /*
-                    else
-                    {
-                        applyConstraints($sA, $nK, $index);
-                    }
-                    */
                 }
 
                 //maps JSON datatypes to MySQL datatypes
@@ -110,8 +99,6 @@ session_start();
 
                     $keys  = array_keys($sA["properties"][$nK]["items"]); 
 
-                    echo "ITEMS TYPE: "; //echo $sA["properties"][$nK]["items"]["type"][0];
-                   // echo $sA["properties"][$nK]["items"][0]["type"];  
                    echo $sA["properties"][$nK]["items"][$keys[0]]["type"];
 
                   $schema[$index] .= "ID INT";
@@ -119,13 +106,7 @@ session_start();
                   $schema[$index] .= "CREATE TABLE ". $nK . "Array(<br>" . $nK . "ArrayID INT NOT NULL, ";
                   $schema[$index] .= $nK . " ";  
 
-                  //datatype
                   $schema[$index] .= $sA["properties"][$nK]["items"][0]["type"] .",<br>";
-
-                  //$sA["properties"][$nK]["properties"][$dNK[$i]]["type"]
-
-
-
 
                   $schema[$index] .= $nK . "ID INT";
                   $schema[$index] .= "PRIMARY KEY(" . $nK . "ArrayID));";
@@ -143,9 +124,6 @@ session_start();
                     for($i=0; $i<count($dNK); $i++)
                     {
                         $schema[$index] .= $dNK[$i] . " ";
-
-                        //echo "<br><br>dNK: " . $dNK[$i] . "<br><br>";
-
                         $schema[$index] .= $sA["properties"][$nK]["properties"][$dNK[$i]]["type"];
                     }
                   
@@ -179,33 +157,28 @@ session_start();
                             {
                                 if(isset($sA["properties"][$nK]["minimum"]))
                                 {
-                                    //echo " <span id='keyword'>CONSTRAINT</span> minimumValue <span class='dtype'>CHECK</span> (" . $nK . ">=" . $sA["properties"][$nK]["minimum"] . ")<br>";
                                     $schema[$index] .= "CONSTRAINT minimumValue CHECK(" . $nK . ">=" . $sA["properties"][$nK]["minimum"] . ")";
                                 }
     
     
                                 if(isset($sA["properties"][$nK]["maximum"]))
                                 {
-                                    //echo " <span id='keyword'>CONSTRAINT</span> maximumValue <span class='dtype'>CHECK</span> (" . $nK . "<=" . $sA["properties"][$nK]["maximum"] . ")<br>";
                                     $schema[$index] .= "CONSTRAINT maximumValue CHECK(" . $nK . "<=" . $sA["properties"][$nK]["maximum"] . ")";
                                 }
     
                                 if(isset($sA["properties"][$nK]["exclusiveMinimum"]))
                                 {
-                                    $schema[$index] .= "CONSTRAINT exclusiveMinimum CHECK(" . $nK . " > " . $sA["properties"][$nK]["exclusiveMinimum"] . ")"; 
-                                    //echo " <span id='keyword'>CONSTRAINT</span> exclusiveMinimum <span class='dtype'>CHECK</span> (" . $nK . ">" . $sA["properties"][$nK]["exclusiveMinimum"] . ")<br>";
+                                    $schema[$index] .= "CONSTRAINT exclusiveMinimum CHECK(" . $nK . " > " . $sA["properties"][$nK]["exclusiveMinimum"] . ")";
                                 }
     
                                 if(isset($sA["properties"][$nK]["exclusiveMaximum"]))
                                 {
                                     $schema[$index] .= "CONSTRAINT exclusiveMaximum CHECK(" . $nK . " < " . $sA["properties"][$nK]["exclusiveMaximum"] . ")";
-                                    //echo " <span id='keyword'>CONSTRAINT</span> exclusiveMaximum <span class='dtype'>CHECK</span> (" . $nK . "<" . $sA["properties"][$nK]["exclusiveMaximum"] . ")<br>";
                                 }
     
                                 if(isset($sA["properties"][$nK]["multipleOf"]))
                                 {
-                                    $schema[$index] .= "CONSTRAINT multipleOf CHECK(" . $nK . "%" .$sA["properties"][$nK]["multipleOf"] . "= 0)";
-                                    //echo " <span id='keyword'>CONSTRAINT</span> multipleOf <span class='dtype'>CHECK</span> (" . $nK . "%" . $sA["properties"][$nK]["multipleOf"] . "= 0)<br>";
+                                    $schema[$index] .= "CONSTRAINT multipleOf CHECK(" . $nK . "%" .$sA["properties"][$nK]["multipleOf"] . "= 0)"
                                 }
     
                                 if(isset($sA["properties"][$nK]["enum"]))
@@ -219,7 +192,6 @@ session_start();
                                     $schema[$index] .=  $sA["properties"][$nK]["enum"][$enumwa] . ",";
                                     $enumwa++;
                                     }
-                                    //echo "ENUM(" . $sA["properties"][$nK]["enum"] . ")<br>";
                                 
                                     $schema[$index] .= ")";
                                 }
@@ -242,33 +214,28 @@ session_start();
                                 if(isset($sA["properties"][$nK]["minimum"]))
                                 {
                                     $schema[$index] .= "CONSTRAINT minimumValue CHECK(" . $nK . ">=" . $sA["properties"][$nK]["minimum"] . ")";
-                                    //echo " <span id='keyword'>CONSTRAINT</span> minimumValue <span class='dtype'>CHECK</span> (" . $nK . ">=" . $sA["properties"][$nK]["minimum"] . ")<br>";
                                 }
     
     
                                 if(isset($sA["properties"][$nK]["maximum"]))
                                 {
                                     $schema[$index] .= "CONSTRAINT maximumValue CHECK(" . $nK . "<=" . $sA["properties"][$nK]["maximum"] . ")";
-                                    //echo " <span id='keyword'>CONSTRAINT</span> maximumValue <span class='dtype'>CHECK</span> (" . $nK . "<=" . $sA["properties"][$nK]["maximum"] . ")<br>";
                                 }
     
                                 if(isset($sA["properties"][$nK]["exclusiveMinimum"]))
                                 {
                                     $schema[$index] .= "CONSTRAINT exclusiveMinimum CHECK(" . $nK . ">" . $sA["properties"][$nK]["exclusiveMinimum"] . ")";
-                                    //echo " <span id='keyword'>CONSTRAINT</span> exclusiveMinimum <span class='dtype'>CHECK</span> (" . $nK . ">" . $sA["properties"][$nK]["exclusiveMinimum"] . ")<br>";
                                 }
     
                                 if(isset($sA["properties"][$nK]["exclusiveMaximum"]))
                                 {
                                     $schema[$index] .= "CONSTRAINT exclusiveMaximum CHECK(" . $nK . "<" . $sA["properties"][$nK]["exclusiveMaximum"] . ")";
-                                    //echo " <span id='keyword'>CONSTRAINT</span> exclusiveMaximum <span class='dtype'>CHECK</span> (" . $nK . "<" . $sA["properties"][$nK]["exclusiveMaximum"] . ")<br>";
                                 }
     
                                 if(isset($sA["properties"][$nK]["multipleOf"]))
                                 {
                                     $schema[$index] .= "CONSTRAINT multipleOf CHECK(" . $nK . "%" . $sA["properties"][$nK]["multipleOf"] . "= 0)";
-                                    //echo " <span id='keyword'>CONSTRAINT</span> multipleOf <span class='dtype'>CHECK</span> (" . $nK . "%" . $sA["properties"][$nK]["multipleOf"] . "= 0)<br>";
-                                }
+                                }    
     
                                 if(isset($sA["properties"][$nK]["enum"]))
                                 {
@@ -281,7 +248,7 @@ session_start();
                                     $schema[$index] .=  $sA["properties"][$nK]["enum"][$enumwa] . ",";
                                     $enumwa++;
                                     }
-                                    //echo "ENUM(" . $sA["properties"][$nK]["enum"] . ")<br>";
+
                                     $schema[$index] .= ")";
                                 }
     
@@ -304,19 +271,16 @@ session_start();
                                 if(isset($sA["properties"][$nK]["maxLength"]))
                                 {
                                     $schema[$index] .= "CONSTRAINT maxLength CHECK(LENGTH(" . $nK . ")<=" . $sA["properties"][$nK]["maxLength"] .")";
-                                    //echo " <span id='keyword'>CONSTRAINT</span> maxLength <span class='dtype'>CHECK</span> (LENGTH(" . $nK . ")<=" . $sA["properties"][$nK]["maxLength"] .")<br>";
                                 }
     
                                 if(isset($sA["properties"][$nK]["minLength"]))
                                 {
                                     $schema[$index] .= "CONSTRAINT minLength CHECK(LENGTH(" . $nK . ")>=" . $sA["properties"][$nK]["minLength"] .")";
-                                    //echo " <span id='keyword'>CONSTRAINT</span> minLength <span class='dtype'>CHECK</span> (LENGTH(" . $nK . ")>=" . $sA["properties"][$nK]["minLength"] .")<br>";
                                 }
     
                                 if(isset($sA["properties"][$nK]["pattern"]))
                                 {
                                     $schema[$index] .= "CONSTRAINT pattern CHECK(" . $nK . " LIKE '" . $sA["properties"][$nK]["pattern"] . "')";
-                                    //echo " <span id='keyword'>CONSTRAINT</span> pattern <span class='dtype'>CHECK</span>(" . $nK . " LIKE '" . $sA["properties"][$nK]["pattern"] . "')<br>";
                                 }
     
                                 if(isset($sA["properties"][$nK]["enum"]))
@@ -330,7 +294,7 @@ session_start();
                                     $schema[$index] .=  $sA["properties"][$nK]["enum"][$enumwa] . ",";
                                     $enumwa++;
                                     }
-                                    //echo "ENUM(" . $sA["properties"][$nK]["enum"] . ")<br>";
+                                    
                                     $schema[$index] .= ")";
                                 }
     
@@ -343,24 +307,14 @@ session_start();
                                     $schema[$index] .= " END ";
                                 }
     
-                                //fix enum
-                                /*
-                                if(isset($sA["properties"][$nK]["enum"]))
-                                {
-                                    echo " <span id='keyword'>CONSTRAINT</span> pattern <span class='dtype'>CHECK</span> (" . $nK . "LIKE '" . $sA["properties"][$nK]["pattern"] . "')<br>";
-                                }
-                                */
-    
                                 break;
                             }
     
+                            //work in progress
                             case "array":
                             {
                                 if(isset($sA["properties"][$nK]["maxItems"]))
                                 {
-                                    /*
-                                    $schema[$index] .= "CONSTRAINT maxItems CHECK(COUNT(" . $nK .") <= " . $sA["properties"][$nK]["maxItems"] . ")";
-                                    */
     
                                     $schema[$index] .= "CREATE TRIGGER maxItems";
                                     $schema[$index] .= "BEFORE INSERT";
@@ -378,8 +332,6 @@ session_start();
     
                                 if(isset($sA["properties"][$nK]["minItems"]))
                                 {
-                                    //$schema[$index] .= "CONSTRAINT minItems CHECK(COUNT(" . $nK .") >= " . $sA["properties"][$nK]["minItems"] . ")";
-                                
                                     $schema[$index] .= "CREATE TRIGGER minItems";
                                     $schema[$index] .= "BEFORE INSERT";
                                     $schema[$index] .= "ON " . $sA["title"];
@@ -395,8 +347,6 @@ session_start();
     
                                 if(isset($sA["properties"][$nK]["maxContains"]))
                                 {
-                                    //$schema[$index] .= "CONSTRAINT maxContains CHECK(COUNT(" . $nK .") <= " . $sA["properties"][$nK]["maxContains"] . ")";
-    
                                     $schema[$index] .= "CREATE TRIGGER maxContains";
                                     $schema[$index] .= "BEFORE INSERT";
                                     $schema[$index] .= "ON " . $sA["title"];
@@ -412,7 +362,6 @@ session_start();
     
                                 if(isset($sA["properties"][$nK]["minContains"]))
                                 {
-                                    //$schema[$index] .= "CONSTRAINT minContains CHECK(COUNT(" . $nK .") >= " . $sA["properties"][$nK]["minContains"] . ")";
                                     $schema[$index] .= "CREATE TRIGGER minContains";
                                     $schema[$index] .= "BEFORE INSERT";
                                     $schema[$index] .= "ON " . $sA["title"];
@@ -447,7 +396,7 @@ session_start();
                                     $schema[$index] .=  $sA["properties"][$nK]["enum"][$enumwa] . ",";
                                     $enumwa++;
                                     }
-                                    //echo "ENUM(" . $sA["properties"][$nK]["enum"] . ")<br>";
+                                    
                                     $schema[$index] .= ")";
                                 }
     
@@ -470,8 +419,6 @@ session_start();
                             {
                                 if(isset($sA["properties"][$nK]["maxProperties"]))
                                 {
-                                    //$schema[$index] .= "CONSTRAINT maxProperties CHECK(COUNT(" . $nK . ") <= " . $sA["properties"][$nK]["maxProperties"] . ")";
-                                
                                     $schema[$index] .= "CREATE TRIGGER maxProperties";
                                     $schema[$index] .= "BEFORE INSERT";
                                     $schema[$index] .= "ON " . $sA["title"];
@@ -488,8 +435,6 @@ session_start();
     
                                 if(isset($sA["properties"][$nK]["minProperties"]))
                                 {
-                                    //$schema[$index] .= "CONSTRAINT minProperties CHECK(COUNT(" . $nK . ") >= " . $sA["properties"][$nK]["minProperties"] . ")";
-                                
                                     $schema[$index] .= "CREATE TRIGGER minProperties";
                                     $schema[$index] .= "BEFORE INSERT";
                                     $schema[$index] .= "ON " . $sA["title"];
@@ -506,7 +451,6 @@ session_start();
     
                                 if(isset($sA["properties"][$nK]["required"]))
                                 {
-                                    //method 1
                                     $schema[$index] .= " NOT NULL ";
     
                                 }
@@ -514,34 +458,14 @@ session_start();
                                 if(isset($sA["properties"][$nK]["dependencies"]))
                                 {
                                     $dNK = array_keys($sA["properties"][$nK]["properties"]);
-
-                                /*    
-                                for($i=0; $i<count($dNK); $i++)
-                                {}
-                                */    
-                                    //
                                     
                                     echo "<br><br>DEPENDENCIES: " . $sA["properties"][$nK]["dependencies"]["fuelMileage"][0] . "<br><br>";
                                     echo "<br><br>DEPENDENCIES: " . $sA["properties"][$nK]["dependencies"]["fuelMileage"][1] . "<br><br>";
                                     echo "inside dependencies constraint";
-
     
-                                    //echo $sA["properties"][$nK]["dependencies"][$index] . " NOT NULL";
-                                    
-                                    /*
-                                    for / foreach loop $index
+                                    $depedantRequired = 0;
     
-                                    find the $sA["properties"][$nK]["dependencies"][$index]
-                                    skip to after attriuute type & add the NOT NULL constraint 
-                                    */
-    
-                                    $depedantRequiredwa = 0;
-    
-                                    //$schema[$index] .= "ENUM(";
-    
-                                    echo "inside dependant required...";
-    
-                                    while($sA["properties"][$nK]["dependencies"]["fuelMileage"][$depedantRequiredwa])
+                                    while($sA["properties"][$nK]["dependencies"]["fuelMileage"][$depedantRequired])
                                     {
                                         $attrNamePos = strpos($schema[$index], $sA["properties"][$nK]);
     
@@ -551,11 +475,8 @@ session_start();
     
                                         $schema[$secondSpacePos+1] = "NOT NULL";
     
-                                    //$schema[$index] .=  $sA["properties"][$nK]["enum"][$enumwa] . ",";
-                                    $depedantRequiredwa++;
+                                        $depedantRequired++;
                                     }
-                                    //echo "ENUM(" . $sA["properties"][$nK]["enum"] . ")<br>";
-                                    //$schema[$index] .= ")";
                                 
                                 }
     
@@ -570,7 +491,7 @@ session_start();
                                     $schema[$index] .=  $sA["properties"][$nK]["enum"][$enumwa] . ",";
                                     $enumwa++;
                                     }
-                                    //echo "ENUM(" . $sA["properties"][$nK]["enum"] . ")<br>";
+                                    
                                     $schema[$index] .= ")";
                                 }
     
@@ -628,20 +549,13 @@ session_start();
 
                     $n2K = array_keys($sA["properties"]);
 
-                    //for($k=0; $k<count($n2K); $i++)
                     for($k=0; $k<count($n2K); $k++)
                     {
-                        $dataType = $sA["properties"][$n2K[$k]]["type"];
-
-            
-
-                        echo "<br><br>Index: " . $index . "<br><br>";
-                        echo "<br><br>Datatype: " . $dataType . "<br><br>";
-    
+                        $dataType = $sA["properties"][$n2K[$k]]["type"];    
     
                         if($dataType == "array" || $dataType == "object")
                         {
-                            //$pos = strpos($schema[$index], ");");
+                            //do nothing
                         }
     
                         else
@@ -679,8 +593,6 @@ session_start();
                     createDatabase($sF, $index);
                     $schemaArray = parseSchemaFile($sF);
                     createTables($schemaArray, $index);
-
-                    //insertSchemaDB($schema[$index]);
 
                     echo "<br><br><br><br>";
                     echo $schema[$index];    
